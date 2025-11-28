@@ -38,6 +38,38 @@
 
   <footer class="footer">托管在 GitHub Pages — 所有资源来自本仓库</footer>
 
-<script src="js/app.js"></script>
+<!-- 在加载主脚本前确保常用容器存在（回退创建），并给主脚本加上缓存跳过参数 -->
+<script>
+  (function(){
+    const ids = ['breadcrumb','folderTitle','fileList','tableBody','sidebar','noData'];
+    ids.forEach(id=>{
+      if(!document.getElementById(id)){
+        // tableBody 要尽量放到现有 table 内
+        if(id === 'tableBody'){
+          const tbl = document.querySelector('.file-table') || document.getElementById('fileTable');
+          if(tbl){
+            const tb = document.createElement('tbody');
+            tb.id = 'tableBody';
+            tbl.appendChild(tb);
+            return;
+          }
+        }
+        const el = document.createElement('div');
+        el.id = id;
+        // 给回退节点最小样式，避免布局完全崩掉
+        el.style.padding = '6px';
+        el.style.margin = '4px 0';
+        if(id === 'noData') el.className = 'no-data';
+        document.body.appendChild(el);
+        console.warn('[fallback] 已创建回退元素 #' + id);
+      }
+    });
+  })();
+</script>
+
+<!-- 加上 ?v=2 避免旧脚本被缓存 -->
+<script src="js/app.js?v=2"></script>
+
 </body>
 </html>
+
