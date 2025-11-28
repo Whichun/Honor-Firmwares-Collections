@@ -1,0 +1,39 @@
+:root{
+  --bg:#f6f7fb;
+  --card:#ffffff;
+  --muted:#93a0b0;
+  --accent:#0b5cff;
+  --border:#e6eaf0;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:#111}
+.topbar{height:64px;background:var(--card);display:flex;align-items:center;padding:0 20px;border-bottom:1px solid var(--border);gap:16px}
+.brand{font-weight:700;font-size:18px}
+.searchwrap{margin-left:auto}
+.searchwrap input{width:300px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:#fff}
+.main{display:flex;gap:18px;padding:18px}
+.sidebar{width:280px;background:var(--card);padding:14px;border-radius:10px;border:1px solid var(--border);height:calc(100vh - 64px - 36px);overflow:auto}
+.content{flex:1;display:flex;flex-direction:column}
+.breadcrumb{color:var(--muted);margin-bottom:12px}
+.table-wrap{background:transparent}
+.file-table{width:100%;border-collapse:collapse;background:transparent}
+.file-table thead th{text-align:left;padding:10px 12px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border)}
+.file-table tbody tr{background:var(--card);border:1px solid var(--border);border-radius:6px;margin-bottom:8px;display:table-row}
+.file-table tbody td{padding:14px 12px;vertical-align:middle}
+.file-table tbody tr + tr{margin-top:10px}
+.col-name{width:60%}
+.col-date{width:20%}
+.col-size{width:20%}
+.row-folder .name-link{font-weight:600;cursor:pointer;color:var(--accent);text-decoration:none}
+.row-folder .name-link:hover{text-decoration:underline}
+.row-file .name-link{color:#111;text-decoration:none;cursor:pointer}
+.row-file .name-link:hover{text-decoration:underline; color:var(--accent)}
+.icon{display:inline-block;width:20px;margin-right:10px;vertical-align:middle}
+.icon.folder{color:#2b6cff}
+.icon.file{color:#4b5563}
+.no-data{padding:28px;text-align:center;color:var(--muted)}
+.sidebar .folder-item{padding:8px;border-radius:8px;cursor:pointer}
+.sidebar .folder-item:hover{background:#f4f6fb}
+.sidebar .folder-item.active{background:#eef4ff;border-left:3px solid var(--accent)}
+.footer{height:36px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;margin-top:12px}
+@media (max-width:900px){.sidebar{display:none}.searchwrap input{width:160px}}
