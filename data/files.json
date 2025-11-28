@@ -1,42 +1,131 @@
 {
-"folders": [
-{
-"id": "firmwares",
-"title": "Honor 固件合集",
-"description": "历史固件归档",
-"items": [
-{
-"id": "hw-1",
-"name": "Honor-Firmware-v1.0",
-"subtitle": "Model: ABC - region: GLOBAL",
-"link": "https://example.com/firmware/download/abc-v1.zip",
-"size": "120MB",
-"tags": ["firmware","stable"]
-},
-{
-"id": "hw-2",
-"name": "Honor-Firmware-v0.9",
-"subtitle": "Model: XYZ - region: CN",
-"link": "https://example.com/firmware/download/xyz-v0.9.zip",
-"size": "98MB",
-"tags": ["firmware","legacy"]
-}
-]
-},
-{
-"id": "tools",
-"title": "刷机工具",
-"description": "常用工具与说明",
-"items": [
-{
-"id": "tool-1",
-"name": "FlashTool v2",
-"subtitle": "Windows tool",
-"link": "https://example.com/tools/flashtool",
-"size": "5MB",
-"tags": ["tool"]
-}
-]
-}
-]
+  "folders": [
+    {
+      "id": "firmwares",
+      "title": "Honor 固件合集",
+      "description": "示例固件文件夹",
+      "folders": [
+        {
+          "id": "firmwares-old",
+          "title": "历史固件",
+          "description": "",
+          "folders": [],
+          "items": [
+            {
+              "id": "hw-1",
+              "name": "Honor-Firmware-v1.0",
+              "subtitle": "Model ABC - GLOBAL",
+              "link": "https://example.com/firmware/abc-v1.zip",
+              "size": "120MB",
+              "tags": [
+                "firmware",
+                "stable"
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "hw-2",
+          "name": "Honor-Firmware-v0.9",
+          "subtitle": "Model XYZ - CN",
+          "link": "https://example.com/firmware/xyz-v0.9.zip",
+          "size": "98MB",
+          "tags": [
+            "firmware",
+            "legacy"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "title": "刷机工具",
+      "description": "常用工具",
+      "folders": [
+        {
+          "id": "folder",
+          "title": "新建文件夹",
+          "description": "",
+          "folders": [
+            {
+              "id": "5592",
+              "title": "5592",
+              "description": "",
+              "folders": [
+                {
+                  "id": "252919",
+                  "title": "252919",
+                  "description": "",
+                  "folders": [
+                    {
+                      "id": "55848",
+                      "title": "55848",
+                      "description": "",
+                      "folders": [
+                        {
+                          "id": "171881",
+                          "title": "171881",
+                          "description": "",
+                          "folders": [
+                            {
+                              "id": "829924",
+                              "title": "829924",
+                              "description": "",
+                              "folders": [
+                                {
+                                  "id": "99999999",
+                                  "title": "99999999",
+                                  "description": "",
+                                  "folders": [],
+                                  "items": []
+                                }
+                              ],
+                              "items": []
+                            }
+                          ],
+                          "items": []
+                        }
+                      ],
+                      "items": []
+                    }
+                  ],
+                  "items": []
+                },
+                {
+                  "id": "5844545545",
+                  "title": "5844545545",
+                  "description": "",
+                  "folders": [],
+                  "items": []
+                }
+              ],
+              "items": []
+            }
+          ],
+          "items": []
+        },
+        {
+          "id": "0000",
+          "title": "0000",
+          "description": "",
+          "folders": [],
+          "items": []
+        }
+      ],
+      "items": [
+        {
+          "id": "tool-1",
+          "name": "FlashTool v2",
+          "subtitle": "Windows工具",
+          "link": "https://example.com/tools/flashtool",
+          "size": "5MB",
+          "tags": [
+            "tool"
+          ]
+        }
+      ]
+    }
+  ]
 }
