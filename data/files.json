@@ -1,0 +1,42 @@
+{
+"folders": [
+{
+"id": "firmwares",
+"title": "Honor 固件合集",
+"description": "历史固件归档",
+"items": [
+{
+"id": "hw-1",
+"name": "Honor-Firmware-v1.0",
+"subtitle": "Model: ABC - region: GLOBAL",
+"link": "https://example.com/firmware/download/abc-v1.zip",
+"size": "120MB",
+"tags": ["firmware","stable"]
+},
+{
+"id": "hw-2",
+"name": "Honor-Firmware-v0.9",
+"subtitle": "Model: XYZ - region: CN",
+"link": "https://example.com/firmware/download/xyz-v0.9.zip",
+"size": "98MB",
+"tags": ["firmware","legacy"]
+}
+]
+},
+{
+"id": "tools",
+"title": "刷机工具",
+"description": "常用工具与说明",
+"items": [
+{
+"id": "tool-1",
+"name": "FlashTool v2",
+"subtitle": "Windows tool",
+"link": "https://example.com/tools/flashtool",
+"size": "5MB",
+"tags": ["tool"]
+}
+]
+}
+]
+}
