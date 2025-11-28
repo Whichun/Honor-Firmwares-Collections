@@ -1,0 +1,25 @@
+:root{--bg:#f6f7fb;--accent:#0b5cff;--muted:#6b7280}
+*{box-sizing:border-box}
+body{font-family: system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; background:var(--bg); color:#111; margin:0}
+.topbar{height:56px;background:#fff;border-bottom:1px solid #e6e8ef;display:flex;align-items:center;padding:0 16px;gap:12px}
+.brand{font-weight:700}
+.search{margin-left:auto;padding:8px 12px;border-radius:6px;border:1px solid #e6e8ef;width:260px}
+.main{display:flex;height:calc(100vh - 56px - 32px);padding:16px;gap:16px}
+.sidebar{width:260px;background:#fff;border-radius:10px;padding:12px;border:1px solid #eef0f6;overflow:auto}
+.content{flex:1;background:transparent;display:flex;flex-direction:column}
+.breadcrumb{font-size:14px;color:var(--muted);margin-bottom:8px}
+.folder-title{font-size:20px;font-weight:600;margin-bottom:12px}
+.file-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.card{background:#fff;border-radius:10px;padding:12px;border:1px solid #eef0f6;display:flex;flex-direction:column;gap:8px}
+.card .name{font-weight:600}
+.card .subtitle{font-size:13px;color:var(--muted)}
+.card .meta{font-size:12px;color:#9aa0aa}
+.tag{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;border:1px solid #e6e8ef;margin-right:6px}
+.footer{height:32px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
+.folder-item{padding:8px;border-radius:8px;cursor:pointer}
+.folder-item:hover{background:#f4f6fb}
+.folder-item.active{background:#eef4ff;border-left:3px solid var(--accent)}
+.no-data{color:var(--muted);padding:20px}
+
+
+@media (max-width:800px){.main{flex-direction:column}.sidebar{width:100%;height:160px}.file-list{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}}
