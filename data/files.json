@@ -1,131 +1,39 @@
 {
   "folders": [
     {
-      "id": "firmwares",
-      "title": "Honor 固件合集",
-      "description": "示例固件文件夹",
+      "id": "12.1",
+      "title": "12.1",
+      "description": "版本 12.1",
+      "mtime": "2025-06-21 23:06",
       "folders": [
         {
-          "id": "firmwares-old",
-          "title": "历史固件",
-          "description": "",
+          "id": "12.1.1",
+          "title": "12.1.1",
+          "description": "12.1.1 子版本",
           "folders": [],
           "items": [
             {
-              "id": "hw-1",
-              "name": "Honor-Firmware-v1.0",
-              "subtitle": "Model ABC - GLOBAL",
-              "link": "https://example.com/firmware/abc-v1.zip",
-              "size": "120MB",
-              "tags": [
-                "firmware",
-                "stable"
-              ]
-            }
-          ]
-        }
-      ],
-      "items": [
-        {
-          "id": "hw-2",
-          "name": "Honor-Firmware-v0.9",
-          "subtitle": "Model XYZ - CN",
-          "link": "https://example.com/firmware/xyz-v0.9.zip",
-          "size": "98MB",
-          "tags": [
-            "firmware",
-            "legacy"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "tools",
-      "title": "刷机工具",
-      "description": "常用工具",
-      "folders": [
-        {
-          "id": "folder",
-          "title": "新建文件夹",
-          "description": "",
-          "folders": [
+              "id": "mangager-apk",
+              "name": "MT管理器2.18.0-target28.apk",
+              "subtitle": "",
+              "link": "https://example.com/MT管理器2.18.0-target28.apk",
+              "size": "22.98 MB",
+              "mtime": "2025-06-21 23:06",
+              "tags": ["apk","tool"]
+            },
             {
-              "id": "5592",
-              "title": "5592",
-              "description": "",
-              "folders": [
-                {
-                  "id": "252919",
-                  "title": "252919",
-                  "description": "",
-                  "folders": [
-                    {
-                      "id": "55848",
-                      "title": "55848",
-                      "description": "",
-                      "folders": [
-                        {
-                          "id": "171881",
-                          "title": "171881",
-                          "description": "",
-                          "folders": [
-                            {
-                              "id": "829924",
-                              "title": "829924",
-                              "description": "",
-                              "folders": [
-                                {
-                                  "id": "99999999",
-                                  "title": "99999999",
-                                  "description": "",
-                                  "folders": [],
-                                  "items": []
-                                }
-                              ],
-                              "items": []
-                            }
-                          ],
-                          "items": []
-                        }
-                      ],
-                      "items": []
-                    }
-                  ],
-                  "items": []
-                },
-                {
-                  "id": "5844545545",
-                  "title": "5844545545",
-                  "description": "",
-                  "folders": [],
-                  "items": []
-                }
-              ],
-              "items": []
+              "id": "multiuser-zip",
+              "name": "12.1多用户存档.zip",
+              "subtitle": "",
+              "link": "https://example.com/12.1多用户存档.zip",
+              "size": "19.63 KB",
+              "mtime": "2025-06-21 23:06",
+              "tags": ["zip"]
             }
-          ],
-          "items": []
-        },
-        {
-          "id": "0000",
-          "title": "0000",
-          "description": "",
-          "folders": [],
-          "items": []
-        }
-      ],
-      "items": [
-        {
-          "id": "tool-1",
-          "name": "FlashTool v2",
-          "subtitle": "Windows工具",
-          "link": "https://example.com/tools/flashtool",
-          "size": "5MB",
-          "tags": [
-            "tool"
           ]
         }
-      ]
+      ],
+      "items": []
     }
   ]
 }
