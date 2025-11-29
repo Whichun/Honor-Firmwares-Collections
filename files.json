@@ -1,0 +1,121 @@
+[
+  {
+    "type": "folder",
+    "name": "12.1",
+    "mtime": "2025-06-21 23:06",
+    "children": [
+      {
+        "type": "folder",
+        "name": "12.1.1",
+        "mtime": "2025-06-21 23:06",
+        "children": [
+          {
+            "type": "folder",
+            "name": "去除更新提示",
+            "mtime": "2025-06-21 23:06",
+            "children": [
+              {
+                "type": "file",
+                "name": "readme.txt",
+                "mtime": "2025-06-21 23:06",
+                "size": 669,
+                "link": "files/12.1/12.1.1/去除更新提示/readme.txt"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "其他补丁",
+            "mtime": "2025-06-21 23:06",
+            "children": [
+              {
+                "type": "file",
+                "name": "other_patch.zip",
+                "mtime": "2025-06-21 23:06",
+                "size": 156310,
+                "link": "files/12.1/12.1.1/其他补丁/other_patch.zip"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "继续无限刷史诗任务的彩陶补丁在这里",
+            "mtime": "2025-06-21 23:06",
+            "children": [
+              {
+                "type": "file",
+                "name": "patch_caita.zip",
+                "mtime": "2025-06-21 23:06",
+                "size": 205910,
+                "link": "files/12.1/12.1.1/继续无限刷史诗任务的彩陶补丁在这里/patch_caita.zip"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "国际版",
+            "mtime": "2025-06-21 23:06",
+            "children": [
+              {
+                "type": "file",
+                "name": "firmware_international.bin",
+                "mtime": "2025-06-21 23:06",
+                "size": 1830000000,
+                "link": "files/12.1/12.1.1/国际版/firmware_international.bin"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "独立并存版本",
+            "mtime": "2025-06-21 23:06",
+            "children": [
+              {
+                "type": "file",
+                "name": "firmware_independent.bin",
+                "mtime": "2025-06-21 23:06",
+                "size": 3560000000,
+                "link": "files/12.1/12.1.1/独立并存版本/firmware_independent.bin"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "北美版",
+            "mtime": "2025-06-21 23:06",
+            "children": [
+              {
+                "type": "file",
+                "name": "firmware_na.bin",
+                "mtime": "2025-06-21 23:06",
+                "size": 1830000000,
+                "link": "files/12.1/12.1.1/北美版/firmware_na.bin"
+              }
+            ]
+          },
+          {
+            "type": "file",
+            "name": "12.1.1免费商店补丁.zip",
+            "mtime": "2025-06-21 23:06",
+            "size": 35850000,
+            "link": "files/12.1/12.1.1/12.1.1免费商店补丁.zip"
+          },
+          {
+            "type": "file",
+            "name": "MT管理器2.18.0-target28.apk",
+            "mtime": "2025-06-21 23:06",
+            "size": 22980000,
+            "link": "files/12.1/12.1.1/MT管理器2.18.0-target28.apk"
+          },
+          {
+            "type": "file",
+            "name": "12.1多用户存档.zip",
+            "mtime": "2025-06-21 23:06",
+            "size": 19630,
+            "link": "files/12.1/12.1.1/12.1多用户存档.zip"
+          }
+        ]
+      }
+    ]
+  }
+]
