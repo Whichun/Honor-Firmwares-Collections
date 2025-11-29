@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Honor Firmwares Collections — 文件浏览器</title>
   <style>
-    /* 轻量化样式，仿照截图布局 */
     :root{--bg:#ffffff;--muted:#9aa0a6;--accent:#3b82f6;--row:#fbfdff}
     html,body{height:100%;margin:0;font-family:Inter, "Helvetica Neue", Arial, sans-serif;background:var(--bg);color:#1f2937}
     .container{max-width:1100px;margin:28px auto;padding:18px}
@@ -18,28 +17,24 @@
     .table{border-radius:10px;overflow:hidden;border:1px solid #eef2f7}
     .table .thead{display:grid;grid-template-columns:40px 1fr 160px 100px;padding:12px 14px;background:#fff}
     .thead .col-title{font-weight:600;color:#374151}
-    .thead .col-muted{color:var(--muted);font-weight:500}
 
     .list{background:var(--row)}
     .row{display:grid;grid-template-columns:40px 1fr 160px 100px;padding:12px 14px;align-items:center;border-top:1px solid rgba(15,23,42,0.02)}
     .row:hover{background:#f7fbff}
-    .name{display:flex;gap:10px;align-items:center}
+    .name{display:flex;flex-direction:column;gap:6px}
+    .name .line{display:flex;gap:10px;align-items:center}
     .name .icon{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px}
-    .name a{color:#0f172a;text-decoration:none;font-weight:500}
+    .name a, .name button{color:#0f172a;text-decoration:none;font-weight:500;border:0;background:transparent;padding:0;font-size:14px}
     .muted{color:var(--muted);font-size:13px}
     .small{font-size:12px;color:var(--muted)}
+    .path{font-size:12px;color:#6b7280}
 
     .controls{display:flex;gap:8px;align-items:center}
-    button{border:0;padding:8px 10px;border-radius:8px;background:#f1f5f9;cursor:pointer}
+    button.control{border:0;padding:8px 10px;border-radius:8px;background:#f1f5f9;cursor:pointer}
     .btn-primary{background:var(--accent);color:#fff}
 
     .empty{padding:36px;text-align:center;color:var(--muted)}
 
-    /* breadcrumbs */
-    .crumbs{display:flex;gap:8px;align-items:center;font-size:13px}
-    .crumbs a{color:var(--accent);text-decoration:none}
-
-    /* responsive */
     @media(max-width:720px){.container{padding:12px}.thead{display:none}.row{grid-template-columns:1fr}.row .meta{margin-top:6px;display:flex;justify-content:space-between}}
   </style>
 </head>
@@ -51,10 +46,11 @@
         <div class="breadcrumb" id="breadcrumb">全部文件 &gt; 12.1 &gt; 12.1.1</div>
       </div>
       <div class="search">
-        <input id="q" type="search" placeholder="搜索文件或文件夹（按回车）" />
+        <input id="q" type="search" placeholder="搜索文件或文件夹（回车）——支持全仓库搜索" />
         <div class="controls">
-          <button id="refresh">刷新</button>
-          <button id="home">回到根目录</button>
+          <button id="refresh" class="control">刷新</button>
+          <button id="home" class="control">回到根目录</button>
+          <button id="clear" class="control">清除搜索</button>
         </div>
       </div>
     </header>
@@ -71,20 +67,17 @@
 
     <div id="empty" class="empty" style="display:none">此目录为空</div>
 
-    <footer style="margin-top:18px;color:var(--muted);font-size:13px">提示：在仓库根目录放置 <code>files.json</code> 即可管理条目。编辑该 JSON 文件（GitHub 网页编辑或 pull request）可以方便地更新条目与外链。</footer>
+    <footer style="margin-top:18px;color:var(--muted);font-size:13px">提示：在仓库根目录放置 <code>files.json</code> 即可管理条目。全仓库搜索会在所有子文件夹中查找匹配项。</footer>
   </div>
 
   <script>
-  // 单文件静态应用：读取根目录 files.json
-  // files.json 格式请参照示例（见 README 或聊天）
-
   const listEl = document.getElementById('list');
   const breadcrumbEl = document.getElementById('breadcrumb');
   const emptyEl = document.getElementById('empty');
   const qEl = document.getElementById('q');
 
   let FILES_DATA = null;
-  let pathStack = []; // array of folder names
+  let pathStack = [];
 
   async function loadData(){
     try{
@@ -123,7 +116,7 @@
       return;
     }
     const crumbs = ['全部文件', ...pathStack];
-    breadcrumbEl.innerHTML = crumbs.map((c,i)=> i===crumbs.length-1 ? `<span>${c}</span>` : `<a href="#" data-i="${i}" class="bc">${c}</a>`).join(' &gt; ');
+    breadcrumbEl.innerHTML = crumbs.map((c,i)=> i===crumbs.length-1 ? `<span>${escapeHtml(c)}</span>` : `<a href="#" data-i="${i}" class="bc">${escapeHtml(c)}</a>`).join(' &gt; ');
     document.querySelectorAll('.bc').forEach(a=> a.addEventListener('click', (e)=>{
       e.preventDefault();
       const idx = Number(a.dataset.i);
@@ -132,7 +125,6 @@
     }));
   }
 
-  // 根据文件名后缀返回类型标签（folder 保持不变）
   function getFileTypeTag(filename){
     if(!filename) return 'text';
     const idx = filename.lastIndexOf('.');
@@ -141,26 +133,51 @@
     if(['zip','7z','rar'].includes(ext)) return 'archive';
     if(['apk'].includes(ext)) return 'android';
     if(['exe','msi'].includes(ext)) return 'exe';
-    // default for others and unknown
     return 'text';
   }
 
+  // 扁平化整个文件树，返回每个节点并包含其完整路径（数组）
+  function flattenTree(){
+    const out = [];
+    function walk(children, parentPath){
+      if(!Array.isArray(children)) return;
+      for(const it of children){
+        const curPath = parentPath.slice();
+        if(it.type==='folder'){
+          curPath.push(it.name);
+          out.push({type:'folder', name: it.name, mtime: it.mtime || '', size: '', path: curPath.slice(), node: it});
+          walk(it.children, curPath);
+        } else {
+          out.push({type:'file', name: it.name, mtime: it.mtime||'', size: it.size||0, link: it.link||'', path: parentPath.slice(), node: it});
+        }
+      }
+    }
+    walk(FILES_DATA, []);
+    return out;
+  }
+
+  // 全局搜索：返回匹配的文件和文件夹信息
+  function searchAll(q){
+    const flat = flattenTree();
+    const key = q.toLowerCase();
+    return flat.filter(it => it.name.toLowerCase().includes(key));
+  }
+
   function renderCurrent(){
+    const q = (qEl.value || '').trim();
+    if(q){
+      renderSearchResults(q);
+      return;
+    }
+
     renderBreadcrumb();
     const node = getNodeAtPath(pathStack);
     if(!node){ listEl.innerHTML = '<div style="padding:20px;color:#b91c1c">找不到该目录</div>'; return; }
     const children = Array.isArray(node.children) ? node.children : [];
-    // 支持搜索
-    const q = (qEl.value || '').trim().toLowerCase();
-    const visible = children.filter(it => !q || it.name.toLowerCase().includes(q));
-
+    const visible = children.slice();
     if(visible.length===0){ listEl.innerHTML=''; emptyEl.style.display='block'; return; } else emptyEl.style.display='none';
 
-    // 把文件夹放前面
-    visible.sort((a,b)=>{
-      if(a.type===b.type) return a.name.localeCompare(b.name, 'zh');
-      return a.type==='folder'? -1:1;
-    });
+    visible.sort((a,b)=>{ if(a.type===b.type) return a.name.localeCompare(b.name, 'zh'); return a.type==='folder'? -1:1; });
 
     listEl.innerHTML = visible.map(it=>{
       const iconType = it.type==='folder' ? 'folder' : getFileTypeTag(it.name);
@@ -172,44 +189,61 @@
 
       return `<div class="row" data-type="${iconType}">
         <div><div class="icon">${iconSvg(iconType)}</div></div>
-        <div class="name">${nameHtml}</div>
+        <div class="name"><div class="line">${nameHtml}</div></div>
         <div class="muted">${mtime}</div>
         <div class="small">${size}</div>
       </div>`;
     }).join('');
 
-    // attach folder click handlers
-    document.querySelectorAll('.open-folder').forEach(btn=> btn.addEventListener('click', (e)=>{
-      const nm = btn.dataset.name;
-      pathStack.push(nm);
-      renderCurrent();
+    document.querySelectorAll('.open-folder').forEach(btn=> btn.addEventListener('click', (e)=>{ const nm = btn.dataset.name; pathStack.push(nm); renderCurrent(); }));
+  }
+
+  function renderSearchResults(q){
+    renderBreadcrumb();
+    const results = searchAll(q);
+    if(results.length===0){ listEl.innerHTML=''; emptyEl.style.display='block'; emptyEl.textContent = `未找到匹配 "${q}" 的文件或文件夹`; return; } else { emptyEl.style.display='none'; emptyEl.textContent = '此目录为空'; }
+    // 把文件夹放前面
+    results.sort((a,b)=>{ if(a.type===b.type) return a.name.localeCompare(b.name, 'zh'); return a.type==='folder'? -1:1; });
+
+    listEl.innerHTML = results.map(it=>{
+      const iconType = it.type==='folder' ? 'folder' : getFileTypeTag(it.name);
+      const mtime = it.mtime || '';
+      const size = it.type==='file' ? fmtSize(it.size) : '';
+      const displayPath = it.path.length? it.path.join(' / '): '';
+
+      const nameHtml = it.type==='folder'
+        ? `<button class="open-folder-search" data-path='${escapeHtml(JSON.stringify(it.path))}'>${escapeHtml(it.name)}</button>`
+        : `<a href="${escapeHtml(it.link||'#')}" data-link="${escapeHtml(it.link||'')}" ${it.link? 'target="_blank" rel="noopener"':''}>${escapeHtml(it.name)}</a>`;
+
+      return `<div class="row" data-type="${iconType}">
+        <div><div class="icon">${iconSvg(iconType)}</div></div>
+        <div class="name"><div class="line">${nameHtml}</div><div class="path">${escapeHtml(displayPath)}</div></div>
+        <div class="muted">${mtime}</div>
+        <div class="small">${size}</div>
+      </div>`;
+    }).join('');
+
+    // folder result click navigates to that folder
+    document.querySelectorAll('.open-folder-search').forEach(btn=> btn.addEventListener('click', ()=>{
+      try{ const p = JSON.parse(btn.dataset.path); pathStack = p; qEl.value = ''; renderCurrent(); }catch(e){ console.error(e); }
     }));
   }
 
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=> ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]); }
 
   function iconSvg(type){
-    // folder 保持原有文件夹图标
     if(type==='folder') return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" fill="#E0F2FE"/><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="#7dd3fc" stroke-width="0.5" fill-opacity="0"/></svg>`;
-
-    // 压缩包图标（zip/7z/rar）
     if(type==='archive') return `<svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="4" width="14" height="16" rx="2" fill="#FEF3C7" stroke="#FCD34D"/><path d="M7 8h6" stroke="#F59E0B" stroke-width="1.2" stroke-linecap="round"/><path d="M10 11v6" stroke="#F59E0B" stroke-width="1.2" stroke-linecap="round"/></svg>`;
-
-    // Android apk：安卓机器人头部简化版
     if(type==='android') return `<svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="4" y="7" width="16" height="10" rx="2" fill="#DCFCE7" stroke="#34D399"/><circle cx="9" cy="11" r="1" fill="#065F46"/><circle cx="15" cy="11" r="1" fill="#065F46"/></svg>`;
-
-    // 可执行文件：笔记本电脑图标
     if(type==='exe') return `<svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="1.5" fill="#EEF2FF" stroke="#6366F1"/><path d="M8 19h8" stroke="#CBD5E1" stroke-width="1.2" stroke-linecap="round"/></svg>`;
-
-    // 默认文本文档图标（其他和无后缀）
     return `<svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="4" y="3" width="12" height="18" rx="1.5" fill="#F8FAFC" stroke="#94A3B8"/><path d="M7 8h7M7 12h7M7 16h5" stroke="#94A3B8" stroke-width="1" stroke-linecap="round"/></svg>`;
   }
 
   document.getElementById('refresh').addEventListener('click', ()=> loadData());
-  document.getElementById('home').addEventListener('click', ()=>{ pathStack = []; renderCurrent(); });
+  document.getElementById('home').addEventListener('click', ()=>{ pathStack = []; qEl.value=''; renderCurrent(); });
+  document.getElementById('clear').addEventListener('click', ()=>{ qEl.value=''; pathStack=[]; renderCurrent(); });
   qEl.addEventListener('keydown', (e)=>{ if(e.key==='Enter') renderCurrent(); });
 
-  // 初始加载
   loadData();
   </script>
 </body>
