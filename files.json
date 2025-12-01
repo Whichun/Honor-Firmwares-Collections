@@ -1,121 +1,154 @@
 [
   {
     "type": "folder",
-    "name": "12.1",
-    "mtime": "2025-06-21 23:06",
+    "name": "HONOR X Series",
+    "mtime": "2025-12-01 13:58",
     "children": [
       {
         "type": "folder",
-        "name": "12.1.1",
-        "mtime": "2025-06-21 23:06",
+        "name": "X30",
+        "mtime": "2025-12-01 14:05",
         "children": [
           {
-            "type": "folder",
-            "name": "去除更新提示",
-            "mtime": "2025-06-21 23:06",
-            "children": [
-              {
-                "type": "file",
-                "name": "readme.txt",
-                "mtime": "2025-06-21 23:06",
-                "size": 669,
-                "link": "files/12.1/12.1.1/去除更新提示/readme.txt"
-              }
-            ]
-          },
-          {
-            "type": "folder",
-            "name": "其他补丁",
-            "mtime": "2025-06-21 23:06",
-            "children": [
-              {
-                "type": "file",
-                "name": "other_patch.zip",
-                "mtime": "2025-06-21 23:06",
-                "size": 156310,
-                "link": "files/12.1/12.1.1/其他补丁/other_patch.zip"
-              }
-            ]
-          },
-          {
-            "type": "folder",
-            "name": "继续无限刷史诗任务的彩陶补丁在这里",
-            "mtime": "2025-06-21 23:06",
-            "children": [
-              {
-                "type": "file",
-                "name": "patch_caita.zip",
-                "mtime": "2025-06-21 23:06",
-                "size": 205910,
-                "link": "files/12.1/12.1.1/继续无限刷史诗任务的彩陶补丁在这里/patch_caita.zip"
-              }
-            ]
-          },
-          {
-            "type": "folder",
-            "name": "国际版",
-            "mtime": "2025-06-21 23:06",
-            "children": [
-              {
-                "type": "file",
-                "name": "firmware_international.bin",
-                "mtime": "2025-06-21 23:06",
-                "size": 1830000000,
-                "link": "files/12.1/12.1.1/国际版/firmware_international.bin"
-              }
-            ]
-          },
-          {
-            "type": "folder",
-            "name": "独立并存版本",
-            "mtime": "2025-06-21 23:06",
-            "children": [
-              {
-                "type": "file",
-                "name": "firmware_independent.bin",
-                "mtime": "2025-06-21 23:06",
-                "size": 3560000000,
-                "link": "files/12.1/12.1.1/独立并存版本/firmware_independent.bin"
-              }
-            ]
-          },
-          {
-            "type": "folder",
-            "name": "北美版",
-            "mtime": "2025-06-21 23:06",
-            "children": [
-              {
-                "type": "file",
-                "name": "firmware_na.bin",
-                "mtime": "2025-06-21 23:06",
-                "size": 1830000000,
-                "link": "files/12.1/12.1.1/北美版/firmware_na.bin"
-              }
-            ]
-          },
+            "type": "file",
+            "name": "ANY-AN00 5.0.0.190(C00E170R4P2)_Firmware_Magic UI 5.0_05017LCT.zip",
+            "mtime": "2025-12-01 14:23",
+            "size": 5118883463,
+            "link": "https://archive.org/download/ann-an-00-7.0.0.108-c-00-e-106-r-2-p-1-firmware-magic-os-7.0-0501-aamy/ANY-AN00%205.0.0.190%28C00E170R4P2%29_Firmware_Magic%20UI%205.0_05017LCT.zip"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "X30i",
+        "mtime": "2025-12-01 14:06",
+        "children": [
           {
             "type": "file",
-            "name": "12.1.1免费商店补丁.zip",
-            "mtime": "2025-06-21 23:06",
-            "size": 35850000,
-            "link": "files/12.1/12.1.1/12.1.1免费商店补丁.zip"
-          },
+            "name": "TFY-AN00 6.1.0.120(C00E120R4P4)_Firmware_Magic UI 6.0_05017LBL.zip",
+            "mtime": "2025-12-01 14:22",
+            "size": 5283243657,
+            "link": "https://archive.org/download/ann-an-00-7.0.0.108-c-00-e-106-r-2-p-1-firmware-magic-os-7.0-0501-aamy/TFY-AN00%206.1.0.120%28C00E120R4P4%29_Firmware_Magic%20UI%206.0_05017LBL.zip"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "X30 Max",
+        "mtime": "2025-12-01 14:06",
+        "children": [
           {
             "type": "file",
-            "name": "MT管理器2.18.0-target28.apk",
-            "mtime": "2025-06-21 23:06",
-            "size": 22980000,
-            "link": "files/12.1/12.1.1/MT管理器2.18.0-target28.apk"
-          },
+            "name": "KKG-AN70 5.0.0.175(C00E5R4P1)_Firmware_Magic UI 5.0_05017LBQ.zip",
+            "mtime": "2025-12-01 14:20",
+            "size": 5042658866,
+            "link": "https://archive.org/download/ann-an-00-7.0.0.108-c-00-e-106-r-2-p-1-firmware-magic-os-7.0-0501-aamy/KKG-AN70%205.0.0.175%28C00E5R4P1%29_Firmware_Magic%20UI%205.0_05017LBQ.zip"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "X40",
+        "mtime": "2025-12-01 14:06",
+        "children": [
           {
             "type": "file",
-            "name": "12.1多用户存档.zip",
-            "mtime": "2025-06-21 23:06",
-            "size": 19630,
-            "link": "files/12.1/12.1.1/12.1多用户存档.zip"
+            "name": "RMO-AN00 6.1.0.100(C735E102R4P1)_Firmware_Magic UI 6.0_0501AALF.zip",
+            "mtime": "2025-12-01 14:19",
+            "size": 7228458197,
+            "link": "https://archive.org/download/ann-an-00-7.0.0.108-c-00-e-106-r-2-p-1-firmware-magic-os-7.0-0501-aamy/RMO-AN00%206.1.0.100%28C735E102R4P1%29_Firmware_Magic%20UI%206.0_0501AALF.zip"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "X40i",
+        "mtime": "2025-12-01 14:07",
+        "children": [
+          {
+            "type": "file",
+            "name": "DIO-AN00 6.1.0.129(C00E52R5P1)_Firmware_Magic UI 6.0_05017LXK.zip",
+            "mtime": "2025-12-01 14:17",
+            "size": 6341686462,
+            "link": "https://archive.org/download/ann-an-00-7.0.0.108-c-00-e-106-r-2-p-1-firmware-magic-os-7.0-0501-aamy/DIO-AN00%206.1.0.129%28C00E52R5P1%29_Firmware_Magic%20UI%206.0_05017LXK.zip"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "X40 GT & X40 GT竞速版",
+        "mtime": "2025-12-01 14:07",
+        "children": [
+          {
+            "type": "file",
+            "name": "ADT-AN00 6.1.0.106(C00E106R3P1)_Firmware_Magic UI 6.0_0501AADX.zip",
+            "mtime": "2025-12-01 14:14",
+            "size": 5637685448,
+            "link": "https://archive.org/download/ann-an-00-7.0.0.108-c-00-e-106-r-2-p-1-firmware-magic-os-7.0-0501-aamy/ADT-AN00%206.1.0.106%28C00E106R3P1%29_Firmware_Magic%20UI%206.0_0501AADX.zip"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "X50",
+        "mtime": "2025-12-01 14:08",
+        "children": [
+          {
+            "type": "file",
+            "name": "ALI-AN00 7.1.1.111(C00E106R3P1)_Firmware_Magic OS 7.2_0501ABVE.zip",
+            "mtime": "2025-12-01 14:10",
+            "size": 7835709683,
+            "link": "https://archive.org/download/ann-an-00-7.0.0.108-c-00-e-106-r-2-p-1-firmware-magic-os-7.0-0501-aamy/ALI-AN00%207.1.1.111%28C00E106R3P1%29_Firmware_Magic%20OS%207.2_0501ABVE.zip"
           }
         ]
       }
     ]
+  },
+  {
+    "type": "folder",
+    "name": "HONOR N Series",
+    "mtime": "2025-12-01 14:25",
+    "children": [
+      {
+        "type": "file",
+        "name": "new-file.apk",
+        "mtime": "2025-12-01 14:28",
+        "size": 0,
+        "link": ""
+      },
+      {
+        "type": "file",
+        "name": "new-file.exe",
+        "mtime": "2025-12-01 14:28",
+        "size": 0,
+        "link": ""
+      },
+      {
+        "type": "file",
+        "name": "new-file.zip",
+        "mtime": "2025-12-01 14:29",
+        "size": 0,
+        "link": ""
+      },
+      {
+        "type": "file",
+        "name": "new-file.msi",
+        "mtime": "2025-12-01 14:29",
+        "size": 0,
+        "link": ""
+      },
+      {
+        "type": "file",
+        "name": "new-file.log",
+        "mtime": "2025-12-01 14:29",
+        "size": 0
+      }
+    ]
+  },
+  {
+    "type": "folder",
+    "name": "HONOR Magic Series",
+    "mtime": "2025-12-01 14:27",
+    "children": []
   }
 ]
