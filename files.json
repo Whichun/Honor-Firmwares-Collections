@@ -110,38 +110,185 @@
     "mtime": "2025-12-01 14:25",
     "children": [
       {
-        "type": "file",
-        "name": "new-file.apk",
-        "mtime": "2025-12-01 14:28",
-        "size": 0,
-        "link": ""
+        "type": "folder",
+        "name": "HONOR 40",
+        "mtime": "2025-12-02 06:43",
+        "children": [
+          {
+            "type": "file",
+            "name": "new-file.txt",
+            "mtime": "2025-12-02 06:44",
+            "size": 0,
+            "link": ""
+          },
+          {
+            "type": "file",
+            "name": "new-file.exe",
+            "mtime": "2025-12-02 06:45",
+            "size": 0,
+            "link": ""
+          },
+          {
+            "type": "file",
+            "name": "new-file.7z",
+            "mtime": "2025-12-02 06:45",
+            "size": 0,
+            "link": ""
+          },
+          {
+            "type": "file",
+            "name": "new-file.apk",
+            "mtime": "2025-12-02 06:45",
+            "size": 0,
+            "link": ""
+          }
+        ]
       },
       {
-        "type": "file",
-        "name": "new-file.exe",
-        "mtime": "2025-12-01 14:28",
-        "size": 0,
-        "link": ""
+        "type": "folder",
+        "name": "HONOR 50",
+        "mtime": "2025-12-02 06:19",
+        "children": []
       },
       {
-        "type": "file",
-        "name": "new-file.zip",
-        "mtime": "2025-12-01 14:29",
-        "size": 0,
-        "link": ""
+        "type": "folder",
+        "name": "HONOR 50 Pro",
+        "mtime": "2025-12-02 06:19",
+        "children": []
       },
       {
-        "type": "file",
-        "name": "new-file.msi",
-        "mtime": "2025-12-01 14:29",
-        "size": 0,
-        "link": ""
+        "type": "folder",
+        "name": "HONOR 60",
+        "mtime": "2025-12-02 06:21",
+        "children": [
+          {
+            "type": "file",
+            "name": "LSA-AN00 5.0.0.165D(C735E165R4P6)_Firmware_Magic UI 5.0_05017LLD.zip",
+            "mtime": "2025-12-02 07:01",
+            "size": 7289968167,
+            "link": "https://archive.org/download/ann-an-00-7.0.0.108-c-00-e-106-r-2-p-1-firmware-magic-os-7.0-0501-aamy/LSA-AN00%205.0.0.165D%28C735E165R4P6%29_Firmware_Magic%20UI%205.0_05017LLD.zip"
+          }
+        ]
       },
       {
-        "type": "file",
-        "name": "new-file.log",
-        "mtime": "2025-12-01 14:29",
-        "size": 0
+        "type": "folder",
+        "name": "HONOR 60 Pro",
+        "mtime": "2025-12-02 06:21",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 70",
+        "mtime": "2025-12-02 06:22",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 70 Pro",
+        "mtime": "2025-12-02 06:22",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 80",
+        "mtime": "2025-12-02 06:25",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 80 Pro",
+        "mtime": "2025-12-02 06:25",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 80 Pro 直屏版",
+        "mtime": "2025-12-02 06:27",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 80 SE",
+        "mtime": "2025-12-02 06:29",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 80 GT",
+        "mtime": "2025-12-02 06:26",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 90",
+        "mtime": "2025-12-02 06:25",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 90 Pro",
+        "mtime": "2025-12-02 06:25",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 90 GT",
+        "mtime": "2025-12-02 06:30",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 100",
+        "mtime": "2025-12-02 06:25",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 100 Pro",
+        "mtime": "2025-12-02 06:31",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 200",
+        "mtime": "2025-12-02 06:31",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 200 Pro",
+        "mtime": "2025-12-02 06:31",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 300",
+        "mtime": "2025-12-02 06:31",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 300 Pro",
+        "mtime": "2025-12-02 06:32",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 300 Ultra",
+        "mtime": "2025-12-02 06:35",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 400",
+        "mtime": "2025-12-02 06:34",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "HONOR 400 Pro",
+        "mtime": "2025-12-02 06:34",
+        "children": []
       }
     ]
   },
@@ -149,6 +296,163 @@
     "type": "folder",
     "name": "HONOR Magic Series",
     "mtime": "2025-12-01 14:27",
-    "children": []
+    "children": [
+      {
+        "type": "folder",
+        "name": "Magic3",
+        "mtime": "2025-12-02 06:48",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic3 Pro",
+        "mtime": "2025-12-02 06:38",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic3 至臻版",
+        "mtime": "2025-12-02 06:50",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic4",
+        "mtime": "2025-12-02 06:49",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic4 Pro",
+        "mtime": "2025-12-02 06:49",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic4 至臻版",
+        "mtime": "2025-12-02 06:51",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic V",
+        "mtime": "2025-12-02 06:50",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic Vs",
+        "mtime": "2025-12-02 06:52",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic Vs 至臻版",
+        "mtime": "2025-12-02 06:52",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic5",
+        "mtime": "2025-12-02 06:52",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic5 Pro",
+        "mtime": "2025-12-02 06:53",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic 5 至臻版",
+        "mtime": "2025-12-02 06:53",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic V2",
+        "mtime": "2025-12-02 06:54",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic V2 至臻版",
+        "mtime": "2025-12-02 06:54",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "PORSCHE DESIGN Magic V2 RSR",
+        "mtime": "2025-12-02 06:55",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic Vs2",
+        "mtime": "2025-12-02 06:56",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic6",
+        "mtime": "2025-12-02 06:56",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic6 Pro",
+        "mtime": "2025-12-02 06:56",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic6 至臻版",
+        "mtime": "2025-12-02 06:57",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "PORSCHE DESIGN Magic6 RSR",
+        "mtime": "2025-12-02 06:58",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic V Flip",
+        "mtime": "2025-12-02 06:58",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic V3",
+        "mtime": "2025-12-02 06:59",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic Vs3",
+        "mtime": "2025-12-02 06:59",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic7",
+        "mtime": "2025-12-02 06:59",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "Magic7 Pro",
+        "mtime": "2025-12-02 06:59",
+        "children": []
+      },
+      {
+        "type": "folder",
+        "name": "PORSCHE DESIGN Magic7 RSR",
+        "mtime": "2025-12-02 07:00",
+        "children": []
+      }
+    ]
   }
 ]
