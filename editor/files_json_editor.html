@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>files.json 可视化编辑器 — Honor Firmwares Collections</title>
+  <style>
+    :root{--bg:#f7fbff;--card:#ffffff;--muted:#6b7280;--accent:#2563eb}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,'PingFang SC',sans-serif;background:var(--bg);color:#0f172a}
+    .wrap{max-width:1200px;margin:22px auto;padding:18px}
+    header{display:flex;align-items:center;justify-content:space-between}
+    h1{margin:0;font-size:18px}
+    .toolbar{display:flex;gap:8px;align-items:center}
+    button{background:#fff;border:1px solid #e6e9ee;padding:8px 10px;border-radius:8px;cursor:pointer}
+    button.primary{background:var(--accent);color:#fff;border-color:transparent}
+    .main{display:grid;grid-template-columns:360px 1fr;gap:16px;margin-top:14px}
+    .panel{background:var(--card);border-radius:10px;padding:12px;border:1px solid rgba(15,23,42,0.04)}
+
+    /* left: tree */
+    .tree{max-height:72vh;overflow:auto}
+    ul.tree-root{list-style:none;margin:0;padding:0}
+    li.node{padding:6px;border-radius:6px;display:flex;align-items:flex-start;gap:8px}
+    li.node .toggle{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted)}
+    li.node .label{flex:1;display:flex;align-items:center;gap:8px}
+    li.node .label b{font-weight:600}
+    li.node .actions{display:flex;gap:6px}
+    .node.selected{background:linear-gradient(90deg,rgba(37,99,235,0.06),rgba(37,99,235,0.03));}
+    .meta{font-size:12px;color:var(--muted)}
+
+    /* editor */
+    .editor h3{margin:0 0 8px 0}
+    .form-row{display:flex;gap:8px;margin-bottom:8px}
+    .form-row input, .form-row select, textarea{flex:1;padding:8px;border-radius:8px;border:1px solid #e6e9ee}
+    textarea{min-height:120px}
+    .small{font-size:12px;color:var(--muted)}
+
+    /* bottom */
+    .bottom{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+
+    /* search */
+    .searchbox{display:flex;gap:8px;align-items:center}
+    .searchbox input{padding:8px;border-radius:8px;border:1px solid #e6e9ee}
+
+    /* responsive */
+    @media(max-width:920px){.main{grid-template-columns:1fr}.tree{max-height:36vh}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>files.json 可视化编辑器</h1>
+      <div class="toolbar">
+        <label style="display:flex;align-items:center;gap:6px"><input id="fileInput" type="file" accept="application/json" style="display:none"/><button onclick="document.getElementById('fileInput').click()">从本地载入</button></label>
+        <button id="btnLoadRemote">加载仓库 ./files.json</button>
+        <button id="btnNew" title="新建空结构">新建</button>
+        <button id="btnDownload" class="primary">下载 files.json</button>
+      </div>
+    </header>
+
+    <div class="main">
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div class="searchbox"><input id="search" placeholder="搜索名称或路径（回车）" /><button id="btnExpandAll">展开全部</button><button id="btnCollapse">折叠</button></div>
+          <div class="small">节点：<span id="nodeCount">0</span></div>
+        </div>
+
+        <div class="tree panel" id="treePanel">
+          <ul class="tree-root" id="treeRoot"></ul>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button id="addFolder">在选中处添加文件夹</button>
+          <button id="addFile">在选中处添加文件</button>
+          <button id="deleteNode">删除选中</button>
+        </div>
+      </div>
+
+      <div class="panel editor">
+        <h3>节点详情</h3>
+        <div id="noSelection" class="small">请选择左侧某个文件或文件夹进行查看/编辑</div>
+        <div id="editorForm" style="display:none">
+          <div class="form-row"><label style="width:90px">类型</label><input id="nf_type" disabled /></div>
+          <div class="form-row"><label style="width:90px">名称</label><input id="nf_name" /></div>
+          <div class="form-row"><label style="width:90px">修改时间</label><input id="nf_mtime" placeholder="YYYY-MM-DD HH:MM" /></div>
+          <div class="form-row"><label style="width:90px">大小（字节）</label><input id="nf_size" /></div>
+          <div class="form-row"><label style="width:90px">外链 (link)</label><input id="nf_link" placeholder="http(s):// 或 相对路径" /></div>
+          <div class="form-row"><label style="width:90px">子节点（仅文件夹）</label><div id="childCount" class="small"></div></div>
+
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button id="saveNode" class="primary">保存更改</button>
+            <button id="renameNode">重命名</button>
+            <button id="cloneNode">复制节点</button>
+            <button id="moveUp">上移</button>
+            <button id="moveDown">下移</button>
+          </div>
+
+          <hr />
+          <h4>高级操作</h4>
+          <div class="form-row"><label style="width:90px">导出该节点 JSON</label><button id="exportNode">导出</button></div>
+          <div class="form-row"><label style="width:90px">替换为 JSON</label><textarea id="importJson" placeholder='将 JSON 粘贴到此处，然后点击 "替换节点"'></textarea></div>
+          <div style="display:flex;gap:8px"><button id="replaceNode">替换节点</button><button id="insertSibling">在前插入同级</button><button id="insertAfter">在后插入同级</button></div>
+        </div>
+
+        <div class="bottom">
+          <button id="btnCopy">复制到剪贴板</button>
+          <button id="btnValidate">校验 JSON</button>
+          <button id="btnReset">重置为加载时数据</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px" class="panel small">
+      使用说明：
+      <ol>
+        <li>你可以从仓库直接加载 <code>./files.json</code>（仅 GitHub Pages 可访问时可用），或从本地选择 JSON 文件。</li>
+        <li>左侧树状显示支持展开/折叠、选择节点。选中文件夹可添加子节点；选中文件可编辑其 metadata。</li>
+        <li>编辑完成后点击“下载 files.json”将生成本地下载；或“复制到剪贴板”方便粘贴到 GitHub 网页编辑器。</li>
+        <li>此编辑器是纯静态前端，无自动提交到 GitHub（如果需要，我可以扩展）。</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    // 以你上传的 files.json 为样例格式（根是数组，节点有 type: folder|file, name, mtime, size, link, children）
+    // 数据结构
+    let RAW = null;
+    let DATA = [];
+    let selectedPath = null; // array of indices, e.g. [0,0,2]
+
+    const treeRoot = document.getElementById('treeRoot');
+    const nodeCount = document.getElementById('nodeCount');
+
+    // helpers to get node by path
+    function getNodeByPath(path){
+      if(!path || path.length===0) return null;
+      let cur = {children: DATA};
+      for(const idx of path){
+        if(!Array.isArray(cur.children)) return null;
+        cur = cur.children[idx];
+        if(!cur) return null;
+      }
+      return cur;
+    }
+    function getParentArrayAndIndex(path){
+      if(!path || path.length===0) return {parent: DATA, index: null};
+      const parentPath = path.slice(0, -1);
+      const index = path[path.length-1];
+      let parent = {children: DATA};
+      for(const i of parentPath){ parent = parent.children[i]; if(!parent) return null; }
+      return {parent: parent.children || [], index};
+    }
+
+    // file input
+    document.getElementById('fileInput').addEventListener('change', async e=>{
+      const f = e.target.files[0]; if(!f) return;
+      const txt = await f.text();
+      try{ const j = JSON.parse(txt); loadFromObject(j); }catch(err){ alert('JSON 解析失败：'+err.message); }
+      e.target.value='';
+    });
+
+    document.getElementById('btnLoadRemote').addEventListener('click', async ()=>{
+      try{
+        const res = await fetch('./files.json', {cache:'no-store'});
+        if(!res.ok) throw new Error('无法 fetch ./files.json: '+res.status);
+        const j = await res.json();
+        loadFromObject(j);
+        alert('已加载 ./files.json');
+      }catch(e){ alert('加载失败：'+e.message); }
+    });
+
+    document.getElementById('btnNew').addEventListener('click', ()=>{ if(!confirm('确认为本次会话新建空 files.json（会清空当前编辑内容）？')) return; loadFromObject([]); });
+
+    document.getElementById('btnDownload').addEventListener('click', ()=>{ const blob = new Blob([JSON.stringify(DATA, null, 2)], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'files.json'; a.click(); });
+
+    document.getElementById('btnCopy').addEventListener('click', async ()=>{ try{ await navigator.clipboard.writeText(JSON.stringify(DATA, null, 2)); alert('已复制到剪贴板'); }catch(e){ alert('复制失败：'+e.message); } });
+
+    document.getElementById('btnValidate').addEventListener('click', ()=>{ try{ JSON.stringify(DATA); alert('JSON 格式有效，当前节点数：'+countNodes(DATA)); }catch(e){ alert('JSON 无效：'+e.message); } });
+
+    document.getElementById('btnReset').addEventListener('click', ()=>{ if(!RAW) return alert('无初始数据'); if(!confirm('重置为加载时的数据？')) return; loadFromObject(JSON.parse(JSON.stringify(RAW))); });
+
+    // render tree using index-paths
+    function loadFromObject(obj){
+      RAW = JSON.parse(JSON.stringify(obj));
+      if(!Array.isArray(obj)) obj = [];
+      DATA = obj;
+      selectedPath = null;
+      renderTree();
+    }
+
+    function renderTree(){
+      treeRoot.innerHTML = '';
+      let count = 0;
+      function walk(list, parentUl, path){
+        list.forEach((it, idx)=>{
+          count++;
+          const li = document.createElement('li'); li.className='node';
+          const toggle = document.createElement('span'); toggle.className='toggle';
+          const label = document.createElement('div'); label.className='label';
+          const actions = document.createElement('div'); actions.className='actions';
+
+          const curPath = path.concat(idx);
+          const pathKey = curPath.join('-');
+          li.dataset.path = pathKey;
+
+          // toggle
+          if(it.type === 'folder'){
+            toggle.textContent = '▸'; toggle.style.cursor='pointer';
+            toggle.onclick = ()=>{ li.classList.toggle('open'); toggle.textContent = li.classList.contains('open') ? '▾' : '▸'; };
+          } else { toggle.textContent = ''; }
+
+          // label
+          const nameEl = document.createElement('span'); nameEl.innerHTML = '<b>'+escapeHtml(it.name||'(无名)')+'</b>';
+          const meta = document.createElement('div'); meta.className='meta'; meta.textContent = (it.mtime? ' ' + it.mtime : '') + (it.size? ' • ' + formatSize(it.size) : '') + (it.type==='folder' ? ' • 文件夹' : '');
+          label.appendChild(nameEl); label.appendChild(meta);
+
+          // actions
+          const selBtn = document.createElement('button'); selBtn.textContent='选择'; selBtn.onclick = ()=>{ selectByPath(curPath); };
+          actions.appendChild(selBtn);
+
+          li.appendChild(toggle); li.appendChild(label); li.appendChild(actions);
+          parentUl.appendChild(li);
+
+          // if selected, mark and open parents
+          if(selectedPath && arraysEqual(selectedPath, curPath)){
+            li.classList.add('selected');
+          }
+
+          if(it.type==='folder'){
+            const ul = document.createElement('ul'); ul.style.listStyle='none'; ul.style.margin='6px 0 0 18px'; ul.style.padding=0; li.appendChild(ul);
+            if(Array.isArray(it.children) && it.children.length>0) walk(it.children, ul, curPath);
+          }
+        });
+      }
+      walk(DATA, treeRoot, []);
+      nodeCount.textContent = count;
+      updateEditorVisibility();
+      // if there is a selectedPath, ensure its li is marked and parents opened
+      if(selectedPath){
+        const selKey = selectedPath.join('-');
+        const selLi = treeRoot.querySelector(`li[data-path='${selKey}']`);
+        if(selLi) selLi.classList.add('selected');
+        // open parent LIs
+        let pathAccum = [];
+        for(const idx of selectedPath.slice(0,-1)){
+          pathAccum.push(idx);
+          const pKey = pathAccum.join('-');
+          const pLi = treeRoot.querySelector(`li[data-path='${pKey}']`);
+          if(pLi){ pLi.classList.add('open'); const t = pLi.querySelector('.toggle'); if(t) t.textContent='▾'; }
+        }
+      }
+    }
+
+    function selectByPath(path){ selectedPath = path.slice(); updateEditorFields(); renderTree(); }
+
+    function updateEditorVisibility(){ const editor = document.getElementById('editorForm'); const noSel = document.getElementById('noSelection'); if(!selectedPath){ editor.style.display='none'; noSel.style.display='block'; } else { editor.style.display='block'; noSel.style.display='none'; }}
+
+    function updateEditorFields(){
+      updateEditorVisibility();
+      if(!selectedPath) return;
+      const node = getNodeByPath(selectedPath);
+      if(!node) return alert('无法定位节点');
+      document.getElementById('nf_type').value = node.type || '';
+      document.getElementById('nf_name').value = node.name || '';
+      document.getElementById('nf_mtime').value = node.mtime || '';
+      document.getElementById('nf_size').value = node.size !== undefined ? String(node.size) : '';
+      document.getElementById('nf_link').value = node.link || '';
+      document.getElementById('childCount').textContent = (node.children ? node.children.length : 0);
+    }
+
+    // save edits
+    document.getElementById('saveNode').addEventListener('click', ()=>{
+      if(!selectedPath) return alert('未选中节点');
+      const node = getNodeByPath(selectedPath);
+      if(!node) return alert('找不到节点');
+      node.name = document.getElementById('nf_name').value.trim();
+      node.mtime = document.getElementById('nf_mtime').value.trim() || undefined;
+      const sizeVal = document.getElementById('nf_size').value.trim(); node.size = sizeVal? Number(sizeVal): undefined;
+      node.link = document.getElementById('nf_link').value.trim() || undefined;
+      renderTree();
+      alert('已保存');
+    });
+
+    // add folder/file
+    document.getElementById('addFolder').addEventListener('click', ()=>{
+      let parentArr = DATA; let parentPath = [];
+      if(selectedPath){ const selNode = getNodeByPath(selectedPath); if(selNode && selNode.type==='folder'){ parentArr = selNode.children = selNode.children||[]; parentPath = selectedPath.slice(); } }
+      const name = prompt('新文件夹名称：','新建文件夹'); if(!name) return;
+      parentArr.push({type:'folder', name:name, mtime: new Date().toISOString().slice(0,16).replace('T',' '), children:[]});
+      renderTree();
+    });
+    document.getElementById('addFile').addEventListener('click', ()=>{
+      let parentArr = DATA; let parentPath = [];
+      if(selectedPath){ const selNode = getNodeByPath(selectedPath); if(selNode && selNode.type==='folder'){ parentArr = selNode.children = selNode.children||[]; parentPath = selectedPath.slice(); } }
+      const name = prompt('新文件名称（含后缀）：','new-file.txt'); if(!name) return;
+      parentArr.push({type:'file', name:name, mtime: new Date().toISOString().slice(0,16).replace('T',' '), size:0, link:''});
+      renderTree();
+    });
+
+    // delete
+    document.getElementById('deleteNode').addEventListener('click', ()=>{
+      if(!selectedPath) return alert('未选中节点');
+      if(!confirm('确认删除选中节点（包含子节点）？')) return;
+      const {parent, index} = getParentArrayAndIndex(selectedPath);
+      if(parent && index!==null && index!==undefined){ parent.splice(index,1); selectedPath = null; renderTree(); }
+    });
+
+    // clone
+    document.getElementById('cloneNode').addEventListener('click', ()=>{
+      if(!selectedPath) return alert('未选中节点');
+      const {parent, index} = getParentArrayAndIndex(selectedPath);
+      if(!parent) return;
+      const copy = JSON.parse(JSON.stringify(parent[index]));
+      parent.splice(index+1,0,copy); renderTree();
+    });
+
+    // rename
+    document.getElementById('renameNode').addEventListener('click', ()=>{
+      if(!selectedPath) return alert('未选中节点');
+      const node = getNodeByPath(selectedPath); if(!node) return;
+      const nm = prompt('新名称：', node.name||''); if(!nm) return; node.name = nm; renderTree();
+    });
+
+    // move up/down
+    document.getElementById('moveUp').addEventListener('click', ()=>{
+      if(!selectedPath) return alert('未选中节点'); const {parent,index} = getParentArrayAndIndex(selectedPath); if(index<=0) return; [parent[index-1],parent[index]]=[parent[index],parent[index-1]]; selectedPath[selectedPath.length-1] = index-1; renderTree();
+    });
+    document.getElementById('moveDown').addEventListener('click', ()=>{
+      if(!selectedPath) return alert('未选中节点'); const {parent,index} = getParentArrayAndIndex(selectedPath); if(index>=parent.length-1) return; [parent[index+1],parent[index]]=[parent[index],parent[index+1]]; selectedPath[selectedPath.length-1] = index+1; renderTree();
+    });
+
+    // export node
+    document.getElementById('exportNode').addEventListener('click', ()=>{
+      if(!selectedPath) return alert('未选中节点'); const node = getNodeByPath(selectedPath); const blob = new Blob([JSON.stringify(node, null, 2)], {type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = (node.name||'node') + '.json'; a.click();
+    });
+
+    // replace node
+    document.getElementById('replaceNode').addEventListener('click', ()=>{
+      if(!selectedPath) return alert('未选中节点'); const txt = document.getElementById('importJson').value.trim(); if(!txt) return alert('请输入 JSON'); try{ const j = JSON.parse(txt); const {parent,index} = getParentArrayAndIndex(selectedPath); parent[index] = j; selectedPath = null; renderTree(); alert('替换成功'); }catch(e){ alert('JSON 解析失败：'+e.message); }
+    });
+
+    // insert sibling before/after
+    document.getElementById('insertSibling').addEventListener('click', ()=>{
+      if(!selectedPath) return alert('未选中节点'); const name = prompt('新节点名称（含后缀或文件夹名）：','new'); if(!name) return; const type = prompt('类型：输入 folder 或 file','file'); if(!type) return; const node = type==='folder'? {type:'folder',name:name,children:[]} : {type:'file',name:name,size:0}; const {parent,index} = getParentArrayAndIndex(selectedPath); parent.splice(index,0,node); renderTree();
+    });
+    document.getElementById('insertAfter').addEventListener('click', ()=>{
+      if(!selectedPath) return alert('未选中节点'); const name = prompt('新节点名称（含后缀或文件夹名）：','new'); if(!name) return; const type = prompt('类型：输入 folder 或 file','file'); if(!type) return; const node = type==='folder'? {type:'folder',name:name,children:[]} : {type:'file',name:name,size:0}; const {parent,index} = getParentArrayAndIndex(selectedPath); parent.splice(index+1,0,node); renderTree();
+    });
+
+    // search
+    document.getElementById('search').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ const q = e.target.value.trim().toLowerCase(); if(!q) return renderTree(); searchAndHighlight(q); } });
+
+    document.getElementById('btnExpandAll').addEventListener('click', ()=>{ document.querySelectorAll('#treeRoot li.node').forEach(li=>li.classList.add('open')); document.querySelectorAll('#treeRoot .toggle').forEach(t=>t.textContent='▾'); });
+    document.getElementById('btnCollapse').addEventListener('click', ()=>{ document.querySelectorAll('#treeRoot li.node').forEach(li=>li.classList.remove('open')); document.querySelectorAll('#treeRoot .toggle').forEach(t=>t.textContent='▸'); });
+
+    function searchAndHighlight(q){
+      // find matching nodes, open parent chains and highlight
+      renderTree();
+      const lis = Array.from(document.querySelectorAll('#treeRoot li.node'));
+      lis.forEach(li=> li.style.background='');
+      function nodeMatches(node){ return node && node.name && node.name.toLowerCase().includes(q); }
+      // traverse DATA with path accumulation
+      function walk(list, path){
+        list.forEach((it, idx)=>{
+          const curPath = path.concat(idx);
+          const key = curPath.join('-');
+          if(nodeMatches(it)){
+            const li = treeRoot.querySelector(`li[data-path='${key}']`);
+            if(li){ li.style.background='linear-gradient(90deg,rgba(16,185,129,0.06),rgba(16,185,129,0.02))'; }
+            // open parents
+            let accum = [];
+            for(const p of curPath.slice(0,-1)){ accum.push(p); const pKey = accum.join('-'); const pli = treeRoot.querySelector(`li[data-path='${pKey}']`); if(pli){ pli.classList.add('open'); const t = pli.querySelector('.toggle'); if(t) t.textContent='▾'; }}
+          }
+          if(it.type==='folder' && Array.isArray(it.children)) walk(it.children, curPath);
+        });
+      }
+      walk(DATA, []);
+    }
+
+    // utilities
+    function formatSize(n){ if(!n && n!==0) return ''; n = Number(n); if(isNaN(n)) return n; if(n>=1e9) return (n/1e9).toFixed(2)+' GB'; if(n>=1e6) return (n/1e6).toFixed(2)+' MB'; if(n>=1e3) return (n/1e3).toFixed(2)+' KB'; return n+' B'; }
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=> ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]); }
+    function arraysEqual(a,b){ if(!a||!b) return false; if(a.length!==b.length) return false; for(let i=0;i<a.length;i++) if(a[i]!==b[i]) return false; return true; }
+    function countNodes(arr){ let c=0; function w(l){ if(!Array.isArray(l)) return; for(const it of l){ c++; if(it.type==='folder') w(it.children); } } w(arr); return c; }
+
+    // initial load: try to load embedded ./files.json automatically if present
+    (async ()=>{
+      try{
+        const res = await fetch('./files.json', {cache:'no-store'});
+        if(res.ok){ const j = await res.json(); loadFromObject(j); RAW = JSON.parse(JSON.stringify(j)); }
+      }catch(e){ /* ignore */ }
+    })();
+  </script>
+</body>
+</html>
