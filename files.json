@@ -228,7 +228,17 @@
         "type": "folder",
         "name": "HONOR 80",
         "mtime": "2025-12-02 06:25",
-        "children": []
+        "children": [
+          {
+            "type": "file",
+            "name": "ANN-AN00 7.0.0.108(C00E106R2P1)_Firmware_Magic OS 7.0_0501AAMY.zip",
+            "mtime": "2025-12-04 09:54",
+            "size": 0,
+            "link": ""
+          }
+        ],
+        "size": 8174547846,
+        "link": "https://archive.org/download/ann-an-00-7.0.0.108-c-00-e-106-r-2-p-1-firmware-magic-os-7.0-0501-aamy/ANN-AN00%207.0.0.108%28C00E106R2P1%29_Firmware_Magic%20OS%207.0_0501AAMY.zip"
       },
       {
         "type": "folder",
