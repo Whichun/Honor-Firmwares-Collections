@@ -103,9 +103,12 @@
     if(!s && s!==0) return '';
     const n = Number(s);
     if(isNaN(n)) return s;
-    if(n>=1e9) return (n/1e9).toFixed(2)+' GB';
-    if(n>=1e6) return (n/1e6).toFixed(2)+' MB';
-    if(n>=1e3) return (n/1e3).toFixed(2)+' KB';
+    const KB = 1024;
+    const MB = KB * 1024;
+    const GB = MB * 1024;
+    if(n>=GB) return (n/GB).toFixed(2)+' GB';
+    if(n>=MB) return (n/MB).toFixed(2)+' MB';
+    if(n>=KB) return (n/KB).toFixed(2)+' KB';
     return n+' B';
   }
 
@@ -230,10 +233,8 @@
   // 读取仓库 icon/ 文件夹中的 svg 作为图标。文件夹图标保持内联 svg。
   function iconHtml(type){
     if(type==='folder') return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" fill="#E0F2FE"/><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke="#7dd3fc" stroke-width="0.5" fill-opacity="0"/></svg>`;
-    // 文件图标从 ./icon/<name>.svg 读取
     const mapping = { zip: 'zip.svg', pc: 'pc.svg', android: 'android.svg', default: 'default.svg' };
     const fname = mapping[type] || 'default.svg';
-    // 使用相对路径，这样部署到 GitHub Pages 时会从仓库根目录的 icon/ 读取
     return `<img src="./icon/${fname}" alt="${fname}" width="18" height="18" onerror="this.onerror=null;this.src='./icon/default.svg'" style="display:block" />`;
   }
 
@@ -246,4 +247,3 @@
   </script>
 </body>
 </html>
-
