@@ -106,7 +106,15 @@
         "type": "folder",
         "name": "X50 Pro & X50 GT",
         "mtime": "2025-12-04 09:31",
-        "children": []
+        "children": [
+          {
+            "type": "file",
+            "name": "ALP-AN00 7.2.0.116(CNC735E116R1P2)_Firmware_Magic OS 7.2_0501ACQE.zip",
+            "mtime": "2025-12-05 13:00",
+            "size": 15123832173,
+            "link": "https://archive.org/download/ann-an-00-7.0.0.108-c-00-e-106-r-2-p-1-firmware-magic-os-7.0-0501-aamy/ALP-AN00%207.2.0.116%28CNC735E116R1P2%29_Firmware_Magic%20OS%207.2_0501ACQE.zip"
+          }
+        ]
       }
     ]
   },
